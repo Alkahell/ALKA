@@ -1,6 +1,6 @@
 // CONFIG JSONBIN
 const BIN_ID  = "https://api.jsonbin.io/v3/b/undefined";      // ← remplace par ton vrai ID
-const API_KEY = "$2a$10$w8iMSIDfId08bdkkpebRg.tgUFwKC0N5aDNz9K8fxURxxeMCaxOYO";  // ← remplace par ta clé (X-Master-Key ou X-Access-Key)
+const API_KEY = "https://api.jsonbin.io/v3/b/696e15bfae596e708fe667c0";  // ← remplace par ta clé (X-Master-Key ou X-Access-Key)
 
 const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}/latest`;
 
