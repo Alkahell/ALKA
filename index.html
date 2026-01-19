@@ -3,32 +3,36 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Delta MDT</title>
+  <title>Delta System</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <main class="workspace">
-    <section class="panel" id="login-panel">
-      <h1>DELTA MDT - LOGIN</h1>
-      <div class="form">
-        <label for="agentId">AGENT ID</label>
-        <input id="agentId" placeholder="ADMIN" />
+<body class="login-body">
+  <div class="login-container">
+    <h1 class="login-title">DELTA&nbsp;SYSTEM</h1>
 
-        <label for="agentPass">PASSWORD</label>
-        <input id="agentPass" type="password" placeholder="••••" />
+    <div class="login-fields">
+      <input
+        id="agentId"
+        class="login-input"
+        placeholder="Staff tls"
+        autocomplete="off"
+      />
 
-        <button id="loginBtn">Connexion</button>
-      </div>
-      <p id="loginError" class="error"></p>
-    </section>
+      <input
+        id="agentPass"
+        class="login-input"
+        type="password"
+        placeholder="••••••••"
+        autocomplete="off"
+      />
 
-    <section class="panel" id="main-panel" style="display:none">
-      <h1>CONSOLE DELTA</h1>
-      <p id="welcome"></p>
-      <p id="clearance"></p>
-      <pre id="rawDb"></pre>
-    </section>
-  </main>
+      <button id="loginBtn" class="login-button">
+        AUTHENTIFICATION
+      </button>
+
+      <p id="loginError" class="login-error"></p>
+    </div>
+  </div>
 
   <script src="app.js"></script>
 </body>
