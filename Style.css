@@ -1,62 +1,95 @@
-:root{
-  --bg:#050607;
-  --panel:#0b0f0d;
-  --txt:#cfe9d8;
-  --accent:#6cff9a;
-  --muted:#6a7a72;
-  --border:rgba(108,255,154,.18);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+:root {
+  --bg: #000000;
+  --panel-bg: #050505;
+  --panel-border: #262626;
+  --accent-text: #f5f5ff;
+  --field-bg: #e7ecff;
+  --field-border: #000000;
+  --btn-bg: #111111;
+  --btn-border: #333333;
+  --btn-text: #c9c9d9;
+  --error-text: #ff5252;
+
+  font-family: "Courier New", Courier, monospace;
 }
-*{box-sizing:border-box}
-body{
-  margin:0;
-  background:#050607;
-  color:var(--txt);
-  display:flex;
-  justify-content:center;
-  align-items:flex-start;
-  min-height:100vh;
+
+/* fond plein noir + centrage du bloc */
+body.login-body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.workspace{
-  padding:30px 16px;
-  width:100%;
-  max-width:600px;
+
+/* card centrale */
+.login-container {
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  padding: 40px 60px 32px;
+  min-width: 420px;
+  max-width: 460px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
 }
-.panel{
-  background:var(--panel);
-  border-radius:14px;
-  padding:18px 18px 22px;
-  border:1px solid var(--border);
-  box-shadow:0 0 0 1px var(--border), 0 16px 40px rgba(0,0,0,.7);
+
+/* titre DELTA SYSTEM */
+.login-title {
+  margin: 0 0 32px;
+  text-align: center;
+  color: var(--accent-text);
+  letter-spacing: 0.35em;
+  font-size: 22px;
+  font-weight: 600;
 }
-h1{
-  margin:0 0 14px;
-  font-size:18px;
-  letter-spacing:.08em;
-  color:var(--accent);
+
+/* bloc champs */
+.login-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
-.form{
-  display:grid;
-  grid-template-columns:120px 1fr;
-  gap:10px;
-  max-width:480px;
+
+/* inputs */
+.login-input {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 0;
+  border: 1px solid var(--field-border);
+  background: var(--field-bg);
+  font-size: 14px;
+  text-align: center;
+  outline: none;
 }
-label{color:var(--muted)}
-input,button{
-  border-radius:8px;
-  border:1px solid var(--border);
-  background:#050807;
-  color:var(--txt);
-  padding:8px 10px;
+
+.login-input:focus {
+  border-color: #5a6cff;
 }
-button{cursor:pointer}
-button:hover{border-color:var(--accent)}
-.error{color:#ff6b6b;margin-top:10px;min-height:1.2em}
-pre{
-  background:#050807;
-  padding:10px;
-  border-radius:8px;
-  border:1px solid var(--border);
-  overflow:auto;
-  max-height:300px;
+
+/* bouton */
+.login-button {
+  margin-top: 8px;
+  width: 100%;
+  padding: 9px 10px;
+  border-radius: 0;
+  border: 1px solid var(--btn-border);
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
 }
+
+.login-button:hover {
+  border-color: #7a7a7a;
+}
+
+/* message d'erreur */
+.login-error {
+  margin: 8px 0 0;
+  min-height: 1.1em;
+  font-size: 12px;
+  color: var(--error-text);
+}
+
