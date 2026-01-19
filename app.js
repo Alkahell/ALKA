@@ -1,5 +1,5 @@
 // ===== JSONBIN CONFIG =====
-const BIN_ID = "https://api.jsonbin.io/v3/b/undefined";
+const BIN_ID = "https://api.jsonbin.io/v3/b/696eb1d443b1c97be93b9d5c";
 const API_KEY = "$2a$10$w8iMSIDfId08bdkkpebRg.tgUFwKC0N5aDNz9K8fxURxxeMCaxOYO";
 
 // On essaie plusieurs endpoints compatibles
