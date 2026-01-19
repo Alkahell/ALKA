@@ -4,36 +4,144 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Delta System</title>
-  <link rel="stylesheet" href="./style.css?v=1" />
+
+  <!-- CSS DIRECTEMENT ICI -->
+  <style>
+    :root {
+      --bg: #000000;
+      --panel-bg: #050505;
+      --panel-border: #262626;
+      --accent-text: #f5f5ff;
+      --field-bg: #e7ecff;
+      --field-border: #000000;
+      --btn-bg: #111111;
+      --btn-border: #333333;
+      --btn-text: #c9c9d9;
+      --error-text: #ff5252;
+
+      font-family: "Courier New", Courier, monospace;
+    }
+
+    /* fond noir + centrage du bloc */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* wrapper pour garder le bloc bien centré */
+    .login-wrapper {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* card centrale */
+    .login-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      padding: 40px 60px 32px;
+      min-width: 420px;
+      max-width: 460px;
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+    }
+
+    /* titre DELTA SYSTEM */
+    .login-title {
+      margin: 0 0 32px;
+      text-align: center;
+      color: var(--accent-text);
+      letter-spacing: 0.35em;
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    /* bloc champs */
+    .login-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* inputs */
+    .login-input {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 0;
+      border: 1px solid var(--field-border);
+      background: var(--field-bg);
+      font-size: 14px;
+      text-align: center;
+      outline: none;
+    }
+
+    .login-input:focus {
+      border-color: #5a6cff;
+    }
+
+    /* bouton */
+    .login-button {
+      margin-top: 8px;
+      width: 100%;
+      padding: 9px 10px;
+      border-radius: 0;
+      border: 1px solid var(--btn-border);
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .login-button:hover {
+      border-color: #7a7a7a;
+    }
+
+    /* message d'erreur */
+    .login-error {
+      margin: 8px 0 0;
+      min-height: 1.1em;
+      font-size: 12px;
+      color: var(--error-text);
+    }
+  </style>
 </head>
-<body class="login-body">
-  <div class="login-container">
-    <h1 class="login-title">DELTA SYSTEM TEST 123</h1>
+<body>
+  <div class="login-wrapper">
+    <div class="login-card">
+      <h1 class="login-title">DELTA&nbsp;SYSTEM</h1>
 
-    <div class="login-fields">
-      <input
-        id="agentId"
-        class="login-input"
-        placeholder="ID"
-        autocomplete="off"
-      />
+      <div class="login-fields">
+        <input
+          id="agentId"
+          class="login-input"
+          placeholder="Staff tls"
+          autocomplete="off"
+        />
 
-      <input
-        id="agentPass"
-        class="login-input"
-        type="password"
-        placeholder="••••••••"
-        autocomplete="off"
-      />
+        <input
+          id="agentPass"
+          class="login-input"
+          type="password"
+          placeholder="••••••••"
+          autocomplete="off"
+        />
 
-      <button id="loginBtn" class="login-button">
-        Connect
-      </button>
+        <button id="loginBtn" class="login-button">
+          AUTHENTIFICATION
+        </button>
 
-      <p id="loginError" class="login-error"></p>
+        <p id="loginError" class="login-error"></p>
+      </div>
     </div>
   </div>
 
+  <!-- ton JS reste tel quel -->
   <script src="app.js"></script>
 </body>
 </html>
