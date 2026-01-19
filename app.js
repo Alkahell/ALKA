@@ -1,10 +1,14 @@
-// CONFIG JSONBIN
-const BIN_ID  = "https://api.jsonbin.io/v3/b/696e15bfae596e708fe667c0";      // ← remplace par ton vrai ID
-const API_KEY = "$2a$10$w8iMSIDfId08bdkkpebRg.tgUFwKC0N5aDNz9K8fxURxxeMCaxOYO";  // ← remplace par ta clé (X-Master-Key ou X-Access-Key)
+// ===== JSONBIN CONFIG =====
+const BIN_ID = "https://api.jsonbin.io/v3/b/undefined";
+const API_KEY = "$2a$10$w8iMSIDfId08bdkkpebRg.tgUFwKC0N5aDNz9K8fxURxxeMCaxOYO";
 
-const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}/latest`;
+// On essaie plusieurs endpoints compatibles
+const URLS = [
+  `https://api.jsonbin.io/v3/b/${BIN_ID}/latest`,     // format { record: ... }
+  `https://api.jsonbin.io/v3/b/${BIN_ID}?meta=false`  // format direct { agents: ... }
+];
 
-// Sélection des éléments HTML
+// ===== DOM =====
 const loginPanel = document.getElementById("login-panel");
 const mainPanel  = document.getElementById("main-panel");
 
@@ -17,65 +21,95 @@ const welcomeEl   = document.getElementById("welcome");
 const clearanceEl = document.getElementById("clearance");
 const rawDbEl     = document.getElementById("rawDb");
 
-// Fonction pour charger le JSON depuis jsonbin
-async function loadDb() {
-  const res = await fetch(BIN_URL, {
-    headers: {
-      "X-Master-Key": API_KEY, // ou "X-Access-Key": API_KEY selon ce que jsonbin t'a donné
-    }
+// ===== HELPERS =====
+function setError(msg) {
+  if (loginError) loginError.textContent = msg;
+}
+
+async function fetchDb(url, headerName) {
+  const res = await fetch(url, {
+    headers: { [headerName]: API_KEY }
   });
 
+  // Donne un message clair si la clé/URL est mauvaise
   if (!res.ok) {
-    throw new Error("Erreur jsonbin: " + res.status);
+    const txt = await res.text().catch(() => "");
+    throw new Error(`HTTP ${res.status} via ${headerName} @ ${url}\n${txt}`);
   }
 
   const data = await res.json();
-  return data.record; // jsonbin renvoie { record: {...}, metadata: {...} }
+
+  // jsonbin peut renvoyer {record:{...}} ou directement {...}
+  return data?.record ?? data;
 }
 
-// Gestion du bouton de connexion
-async function handleLogin() {
-  loginError.textContent = "";
+async function loadDb() {
+  const headerNames = ["X-Master-Key", "X-Access-Key"];
 
-  const id   = agentIdInput.value.trim();
-  const pass = agentPassInput.value.trim();
+  let lastErr = null;
+
+  for (const url of URLS) {
+    for (const h of headerNames) {
+      try {
+        return await fetchDb(url, h);
+      } catch (e) {
+        lastErr = e;
+      }
+    }
+  }
+
+  throw lastErr ?? new Error("Impossible de joindre jsonbin.");
+}
+
+function showMain(agent, db) {
+  // si tu n'as pas de main panel, on ne casse pas
+  if (loginPanel) loginPanel.style.display = "none";
+  if (mainPanel) mainPanel.style.display = "block";
+
+  if (welcomeEl) welcomeEl.textContent = `Bienvenue, ${agent.name}`;
+  if (clearanceEl) clearanceEl.textContent = `Niveau d'accréditation : ${agent.level}`;
+  if (rawDbEl) rawDbEl.textContent = JSON.stringify(db, null, 2);
+}
+
+// ===== LOGIN =====
+async function handleLogin() {
+  setError("");
+
+  const id = (agentIdInput?.value || "").trim();
+  const pass = (agentPassInput?.value || "").trim();
 
   if (!id || !pass) {
-    loginError.textContent = "Remplis les deux champs.";
+    setError("Remplis les deux champs.");
     return;
   }
 
   try {
     const db = await loadDb();
-    const agents = db.agents || {};
+
+    const agents = db?.agents || {};
     const key = id.toUpperCase();
     const agent = agents[key];
 
     if (!agent) {
-      loginError.textContent = "Agent inconnu.";
+      setError("Agent inconnu (ID incorrect).");
       return;
     }
 
     if (agent.pass !== pass) {
-      loginError.textContent = "Mot de passe incorrect.";
+      setError("Mot de passe incorrect.");
       return;
     }
 
-    // Connexion réussie
-    loginPanel.style.display = "none";
-    mainPanel.style.display  = "block";
-
-    welcomeEl.textContent   = `Bienvenue, ${agent.name}`;
-    clearanceEl.textContent = `Niveau d'accréditation : ${agent.level}`;
-    rawDbEl.textContent     = JSON.stringify(db, null, 2);
+    showMain(agent, db);
 
   } catch (e) {
     console.error(e);
-    loginError.textContent = "Erreur de connexion à la base.";
+    // On affiche le vrai problème (très utile)
+    setError("Erreur base : " + (e?.message || "fetch impossible"));
   }
 }
 
-loginBtn.addEventListener("click", handleLogin);
-agentPassInput.addEventListener("keydown", (e) => {
+loginBtn?.addEventListener("click", handleLogin);
+agentPassInput?.addEventListener("keydown", (e) => {
   if (e.key === "Enter") handleLogin();
 });
