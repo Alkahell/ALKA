@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Delta MDT</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="workspace">
+    <section class="panel" id="login-panel">
+      <h1>DELTA MDT - LOGIN</h1>
+      <div class="form">
+        <label for="agentId">AGENT ID</label>
+        <input id="agentId" placeholder="ADMIN" />
+
+        <label for="agentPass">PASSWORD</label>
+        <input id="agentPass" type="password" placeholder="••••" />
+
+        <button id="loginBtn">Connexion</button>
+      </div>
+      <p id="loginError" class="error"></p>
+    </section>
+
+    <section class="panel" id="main-panel" style="display:none">
+      <h1>CONSOLE DELTA</h1>
+      <p id="welcome"></p>
+      <p id="clearance"></p>
+      <pre id="rawDb"></pre>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
